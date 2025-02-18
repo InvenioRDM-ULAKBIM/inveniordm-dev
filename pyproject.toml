@@ -1,0 +1,33 @@
+[project]
+name = "InvenioRDM"
+requires-python = ">= 3.12"
+dynamic = ["version"]
+
+dependencies = [
+  "invenio-app-rdm[opensearch2]~=13.0.0b2.dev2",
+  "uwsgi>=2.0",
+  "uwsgitop>=0.11",
+  "uwsgi-tools>=1.1.1",
+
+  # keep the custom invenio-cli installed in the virtual environment
+  # could possible create problems with global installed invenio-cli
+  # because the path to the virtual environmental invenio-cli will not
+  # be updated
+  "invenio-cli",
+
+  # rspack
+  "flask-webpackext",
+  "invenio-assets",
+  "pywebpack",
+]
+
+[tool.setuptools]
+py-modules = [] # necessary to make the packages with setup.py usable with uv
+
+# overrides packages from "dependencies"
+[tool.uv.sources]
+invenio-cli = { git = "https://github.com/utnapischtim/invenio-cli", branch = "WIP-merged-up-uv-ports-branches" }
+flask-webpackext = { git = "https://github.com/utnapischtim/flask-webpackext", branch = "make-ready-for-rspack" }
+invenio-assets = { git = "https://github.com/slint/invenio-assets", branch = "rspack" }
+pywebpack = { git = "https://github.com/utnapischtim/pywebpack", branch = "add-scripts" }
+# invenio-cli = { path = "path/to/invenio-cli", editable = true } # would be local example
